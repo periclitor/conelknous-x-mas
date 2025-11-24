@@ -1,0 +1,36 @@
+name: Update Daily Facebook Link
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # kör varje natt 02:00 svensk tid ca
+  workflow_dispatch: # möjlighet att trigga manuellt
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
+
+      - name: Install deps
+        run: npm install node-fetch@2
+
+      - name: Run build
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+        run: node build.js
+
+      - name: Commit & push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add index.html
+          git commit -m "Auto update"
+          git push
