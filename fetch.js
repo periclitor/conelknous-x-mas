@@ -37,6 +37,19 @@ module.exports = async function fetchPosts(pageId, token) {
     throw new Error("Kunde inte hämta data: " + JSON.stringify(data));
   }
 
+  const posts = [data.data[0]];
+  const latestPost = data.data[0];
+  const messageData = await (
+    await fetchFn(
+      `https://graph.facebook.com/v24.0/${latestPost.id}?fields=message,attachments&access_token=${token}`
+    )
+  ).json();
+
+  //   console.log("Message data:", JSON.stringify(messageData, null, 2));
+  latestPost.attachments = messageData.attachments;
+
+  return [latestPost];
+
   return data.data.filter(
     (post) => post.message
     //   && (post.message.includes("suno") || post.message.includes("Lucka"))
