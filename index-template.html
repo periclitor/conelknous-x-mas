@@ -5,32 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dagens jul-länk</title>
     <style>
+      :root {
+        --red: #b30000;
+        --card-bg: rgba(255, 255, 255, 0.96);
+        --muted: #6b6b6b;
+      }
+      html,
       body {
-        font-family: Arial, sans-serif;
-        padding: 40px;
-        max-width: 600px;
+        height: 100%;
+      }
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        padding: 0 24px;
+        max-width: 900px;
         margin: auto;
         line-height: 1.6;
+        background: linear-gradient(180deg, #7f0f0f 0%, #b93a2f 70%);
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center top;
+        color: #222;
       }
-      h1 {
-        color: #b30000;
+
+      /* Hero banner uses the FB_background.png image. Use a background image and
+         include an inline <img> for static hosting (GitHub Pages). The relative
+         path works when index.html and the image are in the repo root. */
+      .hero {
+        display: block;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto 18px auto;
+        border-radius: 0 0 14px 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
       }
+      .hero img.hero-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      /* Post card — fancier calendar-style boxes */
       .box {
-        background: #faf5f5;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #e3dcdc;
-        margin-top: 20px;
+        position: relative;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.98),
+          var(--card-bg)
+        );
+        padding: 22px;
+        border-radius: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        margin-top: 22px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+        transition: transform 220ms ease, box-shadow 220ms ease;
       }
-      a {
-        font-size: 1.2rem;
-        color: #0066cc;
-        word-break: break-all;
+      /* .box:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      } */
+
+      .box p {
+        margin: 0 0 12px 0;
+      }
+
+      /* layout message and attachments side-by-side on larger screens */
+      .box-body {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .box-body > p {
+        margin: 0;
+        order: 0;
+      }
+      .box-body > .attachments {
+        order: 1;
+      }
+
+      @media (min-width: 1201px) {
+        .box-body {
+          flex-direction: row;
+          align-items: flex-start;
+        }
+        .box-body > p {
+          flex: 1;
+        }
+        .box-body > .attachments {
+          flex: 0 0 240px;
+          margin-left: 14px;
+        }
+      }
+
+      /* Date badge — larger and calendar-like */
+      .date-badge {
+        display: inline-block;
+        background: #fff;
+        color: var(--red);
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-weight: 800;
+        margin-right: 12px;
+        /* box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12); */
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      a.post-link {
+        font-size: 1.02rem;
+        color: var(--red);
+        text-decoration: none;
+      }
+      a.post-link:hover {
+        text-decoration: underline;
+      }
+
+      .attachments {
+        margin-top: 14px;
+      }
+      .attachment {
+        margin: 10px 0;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .attachment img.attachment-image {
+        max-width: 180px;
+        border-radius: 10px;
+        display: block;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      }
+      .attachment-meta {
+        flex: 1;
+      }
+      .attachment-title {
+        margin: 0 0 6px 0;
+        font-weight: 700;
+      }
+      .attachment-description {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* small screens */
+      @media (max-width: 640px) {
+        body {
+          padding: 14px;
+        }
+        .attachment img.attachment-image {
+          max-width: 110px;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>🎄 Dagens julkalender-länk 🎄</h1>
+    <!-- hero banner — keep the image file next to index.html (FB_background.png) -->
+    <header class="hero" aria-hidden="false">
+      <img
+        class="hero-img"
+        src="./FB_bakgrund.png"
+        alt="Julkalender @conelknous"
+        loading="eager"
+      />
+    </header>
 
     <!--CONTENT-->
 

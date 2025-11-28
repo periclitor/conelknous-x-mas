@@ -27,32 +27,45 @@ module.exports = async function fetchPosts(pageId, token) {
 
   const fetchFn = await getFetch();
 
-  //   const url = `https://graph.facebook.com/v24.0/${pageId}/feed`;
-  const url = `https://graph.facebook.com/v24.0/${pageId}/posts?fields=message,created_time,permalink_url&access_token=${token}`;
+  // Request posts and include attachments in the same Graph API call by using the
+  // `fields` parameter. This avoids an extra request per post. We request
+  // commonly-used subfields of attachments (media, description, target, title,
+  // type, url). Set limit=30 and follow paging.next to retrieve additional pages.
+  const baseUrl = `https://graph.facebook.com/v24.0/${pageId}/posts`;
+  const fields =
+    "message,created_time,permalink_url,attachments{media,description,target,title,type,url}";
+  let url = `${baseUrl}?fields=${encodeURIComponent(
+    fields
+  )}&limit=30&access_token=${token}`;
 
-  const res = await fetchFn(url);
-  const data = await res.json();
+  const allData = [];
+  const MAX_PAGES = 50; // safety cap
+  let pagesFetched = 0;
 
-  if (!data || !data.data) {
-    throw new Error("Kunde inte hämta data: " + JSON.stringify(data));
+  while (url && pagesFetched < MAX_PAGES) {
+    const res = await fetchFn(url);
+    const data = await res.json();
+
+    if (!data || !data.data) {
+      throw new Error("Kunde inte hämta data: " + JSON.stringify(data));
+    }
+
+    allData.push(...data.data);
+
+    if (data.paging && data.paging.next) {
+      url = data.paging.next;
+    } else {
+      url = null;
+    }
+
+    pagesFetched += 1;
   }
 
-  const posts = [data.data[0]];
-  const latestPost = data.data[0];
-  const messageData = await (
-    await fetchFn(
-      `https://graph.facebook.com/v24.0/${latestPost.id}?fields=message,attachments&access_token=${token}`
-    )
-  ).json();
-  latestPost.attachments = messageData.attachments;
-  //   latestPost.shares = messageData.shares;
+  if (allData.length === 0) {
+    throw new Error("Kunde inte hämta data: tomt resultat");
+  }
 
-  //   console.log("Message data:", JSON.stringify(messageData.shares, null, 2));
-
-  return [latestPost];
-
-  return data.data.filter(
-    (post) => post.message
-    //   && (post.message.includes("suno") || post.message.includes("Lucka"))
+  return allData.filter(
+    (post) => post.message && post.message.includes("Dagens låt:")
   );
 };
