@@ -44,9 +44,10 @@ module.exports = async function fetchPosts(pageId, token) {
       `https://graph.facebook.com/v24.0/${latestPost.id}?fields=message,attachments&access_token=${token}`
     )
   ).json();
-
-  //   console.log("Message data:", JSON.stringify(messageData, null, 2));
   latestPost.attachments = messageData.attachments;
+  //   latestPost.shares = messageData.shares;
+
+  //   console.log("Message data:", JSON.stringify(messageData.shares, null, 2));
 
   return [latestPost];
 

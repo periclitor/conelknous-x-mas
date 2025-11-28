@@ -2,8 +2,12 @@ name: Update Daily Facebook Link
 
 on:
   schedule:
-    - cron: "0 2 * * *" # kör varje natt 02:00 svensk tid ca
+    - cron: "0 2 * 11 *" # every day in November at 02:00 UTC (~03:00 Sweden)
+    - cron: "0 2 1-24 12 *" # every day from Dec 1 to Dec 24 at 02:00 UTC (~03:00 Sweden)
   workflow_dispatch: # möjlighet att trigga manuellt
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -24,7 +28,7 @@ jobs:
       - name: Run build
         env:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          FB_ACCESS_TOKEN: ${{ secrets.FB_APP_TOKEN }}
+          FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
         run: node build.js
 
       - name: Commit & push

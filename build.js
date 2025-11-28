@@ -4,7 +4,7 @@ const fetchPosts = require("./fetch");
 
 async function run() {
   const pageId = process.env.FB_PAGE_ID;
-  const token = process.env.FB_APP_TOKEN;
+  const token = process.env.FB_ACCESS_TOKEN;
 
   const templatePath = path.resolve(__dirname, "index-template.html");
 
