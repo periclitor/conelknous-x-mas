@@ -1,0 +1,140 @@
+:root {
+  --red: #b30000;
+  --card-bg: rgba(225, 225, 225, 1);
+  --muted: #6b6b6b;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  /* Use Cormorant Garamond (from Google Fonts) as primary for a classic calendar look */
+  font-family: "Cormorant Garamond", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 0 24px;
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.6;
+  background: linear-gradient(180deg, #7f0f0f 0%, #b93a2f 70%);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center top;
+  color: #222;
+}
+
+.hero {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 18px auto;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+.hero img.hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.box {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1), var(--card-bg));
+  padding: 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 22px;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.box p {
+  margin: 0 0 12px 0;
+}
+
+.box-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.box-body > p {
+  margin: 0;
+  order: 0;
+}
+.box-body > .attachments {
+  order: 1;
+}
+
+@media (min-width: 1201px) {
+  .box-body {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .box-body > p {
+    flex: 1;
+  }
+  .box-body > .attachments {
+    flex: 0 0 240px;
+    margin-left: 14px;
+  }
+}
+
+.date-badge {
+  display: inline-block;
+  color: var(--red);
+  font-weight: 800;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  /* Use Cormorant Garamond for badge too */
+  font-family: "Cormorant Garamond", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+a.post-link {
+  font-size: 1.02rem;
+  color: var(--red);
+  text-decoration: none;
+}
+a.post-link:hover {
+  text-decoration: underline;
+}
+
+.attachments {
+  margin-top: 14px;
+}
+.attachment {
+  margin: 10px 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.attachment img.attachment-image {
+  max-width: 180px;
+  border-radius: 10px;
+  display: block;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.attachment-meta {
+  flex: 1;
+}
+.attachment-title {
+  margin: 0 0 6px 0;
+  font-weight: 700;
+}
+.attachment-description {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .attachment img.attachment-image {
+    max-width: 110px;
+  }
+}
+
+footer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  font-size: 0.8rem;
+  color: #fff;
+  text-align: center;
+}

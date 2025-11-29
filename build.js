@@ -10,6 +10,27 @@ async function run() {
 
   const template = fs.readFileSync(templatePath, "utf8");
 
+  // Helpers (used for safe injection of environment-provided IDs)
+  const {
+    escapeHtml,
+    formatDateDDMMYYYY,
+    linkifyMessage,
+    renderAttachments,
+  } = require("./src/helpers");
+
+  // Inject counter.dev script at build time when COUNTER_DEV_ID is provided.
+  // This keeps the repository free of environment-specific analytics IDs.
+  let counterScript = "";
+  if (process.env.COUNTER_DEV_ID) {
+    counterScript = `<script src="https://cdn.counter.dev/script.js" data-id="${escapeHtml(
+      process.env.COUNTER_DEV_ID
+    )}" data-utcoffset="2" async defer></script>`;
+  }
+  const templateWithCounter = template.replace(
+    "<!--COUNTER_SCRIPT-->",
+    counterScript
+  );
+
   const posts = await fetchPosts(pageId, token);
 
   if (!posts || posts.length === 0) {
@@ -17,7 +38,7 @@ async function run() {
       "Inga matchande inlägg hittades. Skriver en index.html med meddelande."
     );
 
-    const html = template.replace(
+    const html = templateWithCounter.replace(
       "<!--CONTENT-->",
       `<div class="box">
        <div class="box-body"><p class="date-badge" style="margin-bottom: 0; text-align: center;">Vi börjar öppna luckorna 1 december.</p></div>
@@ -28,12 +49,7 @@ async function run() {
     return;
   }
 
-  const {
-    escapeHtml,
-    formatDateDDMMYYYY,
-    linkifyMessage,
-    renderAttachments,
-  } = require("./src/helpers");
+  // (helpers already required above)
 
   const boxes = posts
     .map((post) => {
@@ -66,7 +82,7 @@ async function run() {
     })
     .join("\n");
 
-  const html = template.replace("<!--CONTENT-->", boxes);
+  const html = templateWithCounter.replace("<!--CONTENT-->", boxes);
 
   fs.writeFileSync(path.resolve(__dirname, "index.html"), html);
 }
