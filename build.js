@@ -20,7 +20,7 @@ async function run() {
     const html = template.replace(
       "<!--CONTENT-->",
       `<div class="box">
-       <div class="box-body"><p>Vi börjar öppna luckorna 1 december.</p></div>
+       <div class="box-body"><p class="date-badge" style="margin-bottom: 0; text-align: center;">Vi börjar öppna luckorna 1 december.</p></div>
        </div>`
     );
 
@@ -30,7 +30,6 @@ async function run() {
 
   const {
     escapeHtml,
-    extractUParam,
     formatDateDDMMYYYY,
     linkifyMessage,
     renderAttachments,
@@ -50,7 +49,7 @@ async function run() {
       return `
       <div class="box">
         <div class="box-header">
-          <span class="date-badge">${escapeHtml(dayOnly)}</span>
+          <span class="date-badge">Lucka ${escapeHtml(dayOnly)}</span>
           
         </div>
         <div class="box-body">

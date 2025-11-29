@@ -114,7 +114,6 @@ function renderAttachments(attachments, fallbackPermalink) {
 
 module.exports = {
   escapeHtml,
-  extractUParam,
   formatDateDDMMYYYY,
   linkifyMessage,
   renderAttachments,
