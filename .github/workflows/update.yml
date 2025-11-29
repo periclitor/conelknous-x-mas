@@ -2,8 +2,8 @@ name: Update Daily Facebook Link
 
 on:
   schedule:
-    - cron: "0 2 * 11 *" # every day in November at 02:00 UTC (~03:00 Sweden)
-    - cron: "0 2 1-24 12 *" # every day from Dec 1 to Dec 24 at 02:00 UTC (~03:00 Sweden)
+    - cron: "0 4 * 11 *" # every day in November at 04:00 UTC
+    - cron: "0 4 1-24 12 *" # every day from Dec 1 to Dec 24 at 04:00 UTC
   workflow_dispatch: # möjlighet att trigga manuellt
 
 permissions:
