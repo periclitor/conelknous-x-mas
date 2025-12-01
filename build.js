@@ -22,10 +22,9 @@ async function run() {
   // This keeps the repository free of environment-specific analytics IDs.
   let counterScript = "";
   if (process.env.COUNTER_DEV_ID) {
-    counterScript = `<script src="https://cdn.counter.dev/script.js" data-id="${escapeHtml(
-      process.env.COUNTER_DEV_ID
-    )}" data-utcoffset="2" async defer></script>`;
+    counterScript = `<script src="https://cdn.counter.dev/script.js" data-id="${process.env.COUNTER_DEV_ID}" data-utcoffset="2"></script>`;
   }
+
   const templateWithCounter = template.replace(
     "<!--COUNTER_SCRIPT-->",
     counterScript
@@ -61,7 +60,8 @@ async function run() {
       const date = escapeHtml(formatDateDDMMYYYY(post.created_time));
       const permalink = escapeHtml(post.permalink_url || "");
 
-      const dayOnly = (date && date.split && date.split(".")[0]) || "";
+      const rawDay = (date && date.split && date.split(".")[0]) || "";
+      const dayOnly = rawDay.replace(/^0+/, "") || rawDay;
       return `
       <div class="box">
         <div class="box-header">

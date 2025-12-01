@@ -8,9 +8,8 @@ body {
   height: 100%;
 }
 body {
-  /* Use Cormorant Garamond (from Google Fonts) as primary for a classic calendar look */
-  font-family: "Cormorant Garamond", system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   padding: 0 24px;
   max-width: 900px;
   margin: auto;
