@@ -4,10 +4,15 @@
   "description": "Generate a static index.html with latest Facebook post matching keywords",
   "main": "build.js",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "generate-favicons": "node tools/generate-favicons.js"
   },
   "engines": {
     "node": ">=18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "png-to-ico": "^1.0.0",
+    "sharp": "^0.32.0"
+  }
 }

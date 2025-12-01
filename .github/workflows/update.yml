@@ -22,19 +22,25 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install deps
-        run: npm install node-fetch@2
+      - name: Install dependencies (including devDependencies)
+        run: npm install
+
+      - name: Generate favicons from avatar.png
+        # If avatar.png is missing the step will fail; this keeps the build explicit.
+        run: |
+          node tools/generate-favicons.js
 
       - name: Run build
         env:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_ACCESS_TOKEN: ${{ secrets.FB_ACCESS_TOKEN }}
+          COUNTER_DEV_ID: ${{ secrets.COUNTER_DEV_ID }}
         run: node build.js
 
-      - name: Commit & push
+      - name: Commit & push generated assets
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add index.html
-          git commit -m "Auto update"
-          git push
+          git add index.html favicon.ico favicon-*.png || true
+          git commit -m "Auto update" || echo "No changes to commit"
+          git push || echo "Push failed"
