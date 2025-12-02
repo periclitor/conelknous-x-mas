@@ -26,7 +26,8 @@ jobs:
         run: npm install
 
       - name: Generate favicons from avatar.png
-        # If avatar.png is missing the step will fail; this keeps the build explicit.
+        continue-on-error: true
+        # If avatar.png is missing or generation fails we don't want the whole workflow to fail.
         run: |
           node tools/generate-favicons.js
 
