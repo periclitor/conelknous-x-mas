@@ -6,6 +6,7 @@
 html,
 body {
   height: 100%;
+  position: relative;
 }
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
@@ -54,6 +55,46 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+/* Social links under the header */
+.social-links {
+  text-align: right;
+  position: absolute;
+  top: 5px;
+  left: 28px;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 4px;
+  font-weight: 600;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+.social-link svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.social-link:hover {
+  opacity: 0.95;
+}
+
+/* Accessibility helper: visually hide text but keep it available to screen readers */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .box-body > p {
   margin: 0;
