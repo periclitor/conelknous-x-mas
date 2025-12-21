@@ -65,7 +65,9 @@ module.exports = async function fetchPosts(pageId, token) {
     throw new Error("Kunde inte hämta data: tomt resultat");
   }
 
-  return allData.filter(
-    (post) => post.message && post.message.includes("Dagens låt:")
-  );
+  return allData.filter((post) => {
+    if (!post || !post.message) return false;
+    const msg = post.message;
+    return msg.includes("Dagens låt:") || msg.includes("Bonus låt:");
+  });
 };
