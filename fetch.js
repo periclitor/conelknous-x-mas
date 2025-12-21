@@ -68,6 +68,6 @@ module.exports = async function fetchPosts(pageId, token) {
   return allData.filter((post) => {
     if (!post || !post.message) return false;
     const msg = post.message;
-    return msg.includes("Dagens låt:") || msg.includes("Bonus låt:");
+    return msg.includes("låt:");
   });
 };
